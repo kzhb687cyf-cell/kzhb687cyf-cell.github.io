@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title> Medi</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #062c35, #0891b2);
+    min-height: 100vh;
+    padding: 25px;
+    color: #172033;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    min-height: 600px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+}
+
+.logo {
+    text-align: center;
+    font-size: 42px;
+    font-weight: bold;
+    color: #0891b2;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #64748b;
+}
+
+.frase {
+    text-align: center;
+    color: #dc2626;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 25px;
+}
+
+.minijuego {
+    padding: 22px;
+    border: 2px solid #cbd5e1;
+    background: white;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: .2s;
+}
+
+.minijuego:hover {
+    transform: translateY(-5px);
+    background: #e0f2fe;
+    border-color: #0891b2;
+}
+
+.icono {
+    display: block;
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+.boton {
+    padding: 13px 22px;
+    margin-top: 15px;
+    background: #0891b2;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.boton:hover {
+    background: #0e7490;
+}
+
+.volver {
+    background: #475569;
+}
+
+.pantalla {
+    display: none;
+}
+
+.estadisticas {
+    display: flex;
+    justify-content: space-between;
+    background: #f1f5f9;
+    padding: 14px;
+    border-radius: 12px;
+    margin: 18px 0;
+    font-weight: bold;
+}
+
+.pregunta {
+    background: #f8fafc;
+    padding: 22px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.opcion {
+    width: 100%;
+    padding: 15px;
+    margin: 7px 0;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+}
+
+.opcion:hover {
+    background: #e0f2fe;
+}
+
+.correcta {
+    background: #bbf7d0 !important;
+    border-color: #16a34a !important;
+}
+
+.incorrecta {
+    background: #fecaca !important;
+    border-color: #dc2626 !important;
+}
+
+.timer {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: #dc2626;
+    margin: 15px;
+}
+
+.caso {
+    background: #fff7ed;
+    border-left: 6px solid #f97316;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.proceso {
+    padding: 18px;
+    background: #f1f5f9;
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #cbd5e1;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.tarjeta {
+    padding: 18px;
+    background: #e0f2fe;
+    border: 2px solid #0891b2;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.tarjeta:hover {
+    background: #bae6fd;
+}
+
+.nombreCreador {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #7c3aed;
+}
+
+.fraseCreador {
+    text-align: center;
+    color: #dc2626;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.resultadoGrande {
+    text-align: center;
+    font-size: 65px;
+}
+
+@media(max-width:650px) {
+    .menu,
+    .tarjetas {
+        grid-template-columns: 1fr;
+    }
+
+    .contenedor {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+<!-- ================= MENÚ ================= -->
+
+<div id="menu">
+
+    <div class="logo">
+        🩺  Medi
+    </div>
+
+    <p class="subtitulo">
+        Entrenamiento médico
+    </p>
+
+    <p class="frase">
+     
+    </p>
+
+    <div style="text-align:center">
+        <button class="boton" onclick="mostrarCreador()">
+            👨‍⚕️ Creador
+        </button>
+    </div>
+
+    <h2 style="text-align:center">
+        🎮 Selecciona un desafío
+    </h2>
+
+    <div class="menu">
+
+        <button class="minijuego" onclick="iniciar('primeros')">
+            <span class="icono">🚑</span>
+            <strong>Primeros auxilios</strong>
+            <br>
+            <small>Casos clínicos</small>
+        </button>
+
+        <button class="minijuego" onclick="iniciar('via')">
+            <span class="icono">🫁</span>
+            <strong>Vía aérea</strong>
+            <br>
+            <small>Orden de prioridades</small>
+        </button>
+
+        <button class="minijuego" onclick="iniciar('hemorragia')">
+            <span class="icono">🩸</span>
+            <strong>Control de hemorragias</strong>
+            <br>
+            <small>Decisiones clínicas</small>
+        </button>
+
+        <button class="minijuego" onclick="iniciar('anatomia')">
+            <span class="icono">🦴</span>
+            <strong>Anatomía</strong>
+            <br>
+            <small>Identificación anatómica</small>
+        </button>
+
+        <button class="minijuego" onclick="iniciar('fisiologia')">
+            <span class="icono">❤️</span>
+            <strong>Fisiología</strong>
+            <br>
+            <small>Interpretación de procesos</small>
+        </button>
+
+        <button class="minijuego" onclick="iniciar('micro')">
+            <span class="icono">🦠</span>
+            <strong>Microbiología</strong>
+            <br>
+            <small>Diagnóstico microbiológico</small>
+        </button>
+
+        <button class="minijuego" onclick="iniciar('farmaco')">
+            <span class="icono">💊</span>
+            <strong>Farmacología</strong>
+            <br>
+            <small>Acción de medicamentos</small>
+        </button>
+
+    </div>
+</div>
+
+
+<!-- ================= CREADOR ================= -->
+
+<div id="creador" class="pantalla">
+
+    <div class="resultadoGrande">
+        👨‍⚕️
+    </div>
+
+    <div class="logo">
+         Medi
+    </div>
+
+    <h1 style="text-align:center">
+        CREADOR
+    </h1>
+
+    <p class="nombreCreador">
+        Esteban Martinez
+    </p>
+
+    <p class="fraseCreador">
+        ☠️ "¡Seré el Rey de los Piratas!"
+    </p>
+
+    <p style="text-align:center;color:#64748b">
+        
+    </p>
+
+    <div style="text-align:center">
+        <button class="boton volver" onclick="volverMenu()">
+            ⬅️ Volver
+        </button>
+    </div>
+
+</div>
+
+
+<!-- ================= JUEGO ================= -->
+
+<div id="juego" class="pantalla">
+
+    <div class="logo">
+        🩺  Medi
+    </div>
+
+    <h2 id="tituloJuego" style="text-align:center"></h2>
+
+    <div class="estadisticas">
+
+        <span>
+            ⭐ Puntos:
+            <span id="puntos">0</span>
+        </span>
+
+        <span>
+            ❤️ Vidas:
+            <span id="vidas">3</span>
+        </span>
+
+    </div>
+
+    <div id="contenido"></div>
+
+    <button
+        id="siguiente"
+        class="boton"
+        style="display:none;width:100%"
+        onclick="siguiente()">
+
+        Siguiente ➡️
+
+    </button>
+
+    <button
+        class="boton volver"
+        onclick="volverMenu()">
+
+        ⬅️ Menú principal
+
+    </button>
+
+</div>
+
+
+<!-- ================= RESULTADO ================= -->
+
+<div id="resultado" class="pantalla">
+
+    <div class="resultadoGrande">
+        🏆
+    </div>
+
+    <div class="logo">
+        ¡EXCELENTE!
+    </div>
+
+    <h2 style="text-align:center">
+        Resultado final
+    </h2>
+
+    <p id="textoResultado"
+       style="text-align:center;font-size:20px">
+    </p>
+
+    <div style="text-align:center">
+
+        <button class="boton" onclick="volverMenu()">
+            🎮 Volver a jugar
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let juegoActual = "";
+let preguntaActual = 0;
+let puntos = 0;
+let vidas = 3;
+let tiempo = 30;
+let temporizador;
+
+
+/* =====================================================
+   BANCO DE PREGUNTAS
+===================================================== */
+
+const preguntas = {
+
+/* ---------- PRIMEROS AUXILIOS ---------- */
+
+primeros: [
+
+{
+caso:
+"Un paciente de 22 años sufre una caída. Está consciente, responde preguntas, pero presenta dolor intenso en el cuello. ¿Cuál es la prioridad?",
+
+opciones: [
+"Sentarlo inmediatamente",
+"Evaluar la seguridad y evitar movimientos innecesarios del cuello",
+"Dar agua",
+"Hacerlo caminar"
+],
+
+correcta: 1
+},
+
+{
+caso:
+"Una persona presenta dificultad para respirar después de una reacción alérgica. La dificultad respiratoria está aumentando rápidamente. ¿Qué debes priorizar?",
+
+opciones: [
+"Esperar a que desaparezca",
+"Activar ayuda de emergencia",
+"Dar alimentos",
+"Hacer ejercicio"
+],
+
+correcta: 1
+},
+
+{
+caso:
+"Una persona está inconsciente y no respira normalmente. ¿Cuál es la acción prioritaria dentro de los protocolos básicos de emergencia?",
+
+opciones: [
+"Dar agua",
+"Activar el sistema de emergencias e iniciar RCP según capacitación",
+"Sentarla",
+"Esperar"
+],
+
+correcta: 1
+}
+
+],
+
+
+/* ---------- VIA AEREA ---------- */
+
+via: [
+
+{
+caso:
+"Paciente inconsciente. No responde y no presenta respiración normal. ¿Cuál es la prioridad inicial?",
+
+opciones: [
+"Dar líquidos",
+"Activar emergencias y comenzar las acciones de reanimación correspondientes",
+"Colocarlo de pie",
+"Esperar cinco minutos"
+],
+
+correcta: 1
+},
+
+{
+caso:
+"Paciente consciente se lleva las manos al cuello y no puede hablar ni respirar adecuadamente. ¿Qué situación sospechas?",
+
+opciones: [
+"Obstrucción grave de la vía aérea",
+"Hipoglucemia leve",
+"Fractura",
+"Deshidratación"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"Durante una valoración primaria, ¿por qué la vía aérea es una prioridad?",
+
+opciones: [
+"Porque permite mantener el paso de aire hacia los pulmones",
+"Porque controla la presión arterial",
+"Porque produce glóbulos rojos",
+"Porque regula la glucosa"
+],
+
+correcta: 0
+}
+
+],
+
+
+/* ---------- HEMORRAGIAS ---------- */
+
+hemorragia: [
+
+{
+caso:
+"Una persona presenta una herida con sangrado externo abundante. ¿Cuál es una medida inicial apropiada?",
+
+opciones: [
+"Aplicar presión directa",
+"Esperar",
+"Aplicar tierra",
+"Dar comida"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"Después de aplicar presión directa, el sangrado continúa siendo importante. ¿Qué debes hacer?",
+
+opciones: [
+"Dejar de presionar",
+"Continuar el control del sangrado y solicitar ayuda de emergencia",
+"Lavar continuamente la herida",
+"Hacer caminar al paciente"
+],
+
+correcta: 1
+},
+
+{
+caso:
+"Un paciente con pérdida importante de sangre presenta palidez, debilidad y alteración del estado mental. ¿Qué debes sospechar?",
+
+opciones: [
+"Posible shock",
+"Digestión normal",
+"Mejora clínica",
+"Hipervitaminosis"
+],
+
+correcta: 0
+}
+
+],
+
+
+/* ---------- ANATOMIA ---------- */
+
+anatomia: [
+
+{
+caso:
+"¿Qué estructura del sistema nervioso central se encuentra protegida principalmente por el cráneo?",
+
+opciones: [
+"Corazón",
+"Cerebro",
+"Pulmón",
+"Riñón"
+],
+
+correcta: 1
+},
+
+{
+caso:
+"¿Cuál es la principal función de los alvéolos pulmonares?",
+
+opciones: [
+"Producir sangre",
+"Realizar intercambio gaseoso",
+"Filtrar orina",
+"Bombear sangre"
+],
+
+correcta: 1
+},
+
+{
+caso:
+"¿Qué estructura conecta principalmente la faringe con el estómago?",
+
+opciones: [
+"Tráquea",
+"Esófago",
+"Bronquio",
+"Uretra"
+],
+
+correcta: 1
+}
+
+],
+
+
+/* ---------- FISIOLOGIA ---------- */
+
+fisiologia: [
+
+{
+caso:
+"Durante la sístole ventricular, ¿qué ocurre principalmente?",
+
+opciones: [
+"Los ventrículos expulsan sangre",
+"Los ventrículos dejan de funcionar",
+"Los pulmones producen sangre",
+"Los riñones producen oxígeno"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"Después de ingerir alimentos, aumenta la glucosa sanguínea. ¿Qué hormona participa principalmente en disminuirla?",
+
+opciones: [
+"Insulina",
+"Glucagón",
+"Adrenalina",
+"Melatonina"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"Una persona aumenta su frecuencia respiratoria durante ejercicio. ¿Qué función está intentando aumentar el organismo?",
+
+opciones: [
+"Intercambio de gases",
+"Producción de orina",
+"Digestión",
+"Formación de hueso"
+],
+
+correcta: 0
+}
+
+],
+
+
+/* ---------- MICROBIOLOGIA ---------- */
+
+micro: [
+
+{
+caso:
+"Un cultivo identifica Escherichia coli. ¿Qué tipo de microorganismo es?",
+
+opciones: [
+"Bacteria",
+"Virus",
+"Hongo",
+"Protozoo"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"Un paciente tiene una infección viral. ¿Por qué un antibiótico común no trata directamente al virus?",
+
+opciones: [
+"Porque los antibióticos están dirigidos principalmente contra estructuras o procesos bacterianos",
+"Porque los virus son demasiado grandes",
+"Porque los virus no causan enfermedades",
+"Porque los antibióticos son vitaminas"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"¿Cuál de los siguientes organismos pertenece al grupo de los hongos?",
+
+opciones: [
+"Candida albicans",
+"Escherichia coli",
+"Influenza",
+"Plasmodium"
+],
+
+correcta: 0
+}
+
+],
+
+
+/* ---------- FARMACOLOGIA ---------- */
+
+farmaco: [
+
+{
+caso:
+"Un medicamento se utiliza principalmente para disminuir el dolor. ¿Qué efecto farmacológico describe mejor esta acción?",
+
+opciones: [
+"Analgésico",
+"Antibiótico",
+"Antiséptico",
+"Diurético"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"¿Cuál es una característica general de los antibióticos?",
+
+opciones: [
+"Actúan contra bacterias susceptibles",
+"Eliminan todos los virus",
+"Siempre reducen la fiebre",
+"Son vitaminas"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"Un fármaco que favorece la eliminación de agua y sodio mediante la orina pertenece generalmente al grupo de:",
+
+opciones: [
+"Diuréticos",
+"Analgésicos",
+"Antibióticos",
+"Antivirales"
+],
+
+correcta: 0
+},
+
+{
+caso:
+"¿Qué significa que un medicamento tenga un efecto adverso?",
+
+opciones: [
+"Una respuesta no deseada asociada al medicamento",
+"Que siempre sea peligroso",
+"Que no tenga ningún efecto",
+"Que sea un alimento"
+],
+
+correcta: 0
+}
+
+]
+
+};
+
+
+/* =====================================================
+   INICIAR JUEGO
+===================================================== */
+
+function iniciar(tipo) {
+
+    juegoActual = tipo;
+    preguntaActual = 0;
+    puntos = 0;
+    vidas = 3;
+
+    document.getElementById("menu").style.display = "none";
+    document.getElementById("creador").style.display = "none";
+    document.getElementById("resultado").style.display = "none";
+    document.getElementById("juego").style.display = "block";
+
+    const nombres = {
+        primeros: "🚑 Primeros auxilios",
+        via: "🫁 Vía aérea",
+        hemorragia: "🩸 Control de hemorragias",
+        anatomia: "🦴 Anatomía",
+        fisiologia: "❤️ Fisiología",
+        micro: "🦠 Microbiología",
+        farmaco: "💊 Farmacología"
+    };
+
+    document.getElementById("tituloJuego").textContent =
+        nombres[tipo];
+
+    actualizar();
+
+    mostrarPregunta();
+}
+
+
+/* =====================================================
+   MOSTRAR PREGUNTA
+===================================================== */
+
+function mostrarPregunta() {
+
+    const datos =
+        preguntas[juegoActual][preguntaActual];
+
+    const contenido =
+        document.getElementById("contenido");
+
+    contenido.innerHTML = `
+
+        <div class="caso">
+
+            <strong>🧑‍⚕️ CASO CLÍNICO</strong>
+
+            <p>
+                ${datos.caso}
+            </p>
+
+        </div>
+
+        <div class="pregunta">
+
+            <h3>
+                ¿Cuál es la respuesta más adecuada?
+            </h3>
+
+        </div>
+    `;
+
+    datos.opciones.forEach((opcion, indice) => {
+
+        const boton =
+            document.createElement("button");
+
+        boton.className = "opcion";
+
+        boton.textContent = opcion;
+
+        boton.onclick = function() {
+
+            responder(indice, boton);
+
+        };
+
+        contenido.appendChild(boton);
+
+    });
+
+    document.getElementById("siguiente").style.display = "none";
+
+}
+
+
+/* =====================================================
+   RESPONDER
+===================================================== */
+
+function responder(indice, boton) {
+
+    const datos =
+        preguntas[juegoActual][preguntaActual];
+
+    const botones =
+        document.querySelectorAll(".opcion");
+
+    botones.forEach(b => b.disabled = true);
+
+    if (indice === datos.correcta) {
+
+        boton.classList.add("correcta");
+
+        puntos += 15;
+
+    } else {
+
+        boton.classList.add("incorrecta");
+
+        botones[datos.correcta].classList.add("correcta");
+
+        vidas--;
+
+    }
+
+    actualizar();
+
+    document.getElementById("siguiente").style.display = "block";
+
+    if (
+        preguntaActual >=
+        preguntas[juegoActual].length - 1
+    ) {
+
+        document.getElementById("siguiente").textContent =
+            "🏆 Ver resultado";
+
+    }
+
+}
+
+
+/* =====================================================
+   SIGUIENTE
+===================================================== */
+
+function siguiente() {
+
+    if (
+        preguntaActual >=
+        preguntas[juegoActual].length - 1
+    ) {
+
+        terminar();
+        return;
+
+    }
+
+    preguntaActual++;
+
+    mostrarPregunta();
+}
+
+
+/* =====================================================
+   ACTUALIZAR
+===================================================== */
+
+function actualizar() {
+
+    document.getElementById("puntos").textContent =
+        puntos;
+
+    document.getElementById("vidas").textContent =
+        vidas;
+
+}
+
+
+/* =====================================================
+   TERMINAR
+===================================================== */
+
+function terminar() {
+
+    clearInterval(temporizador);
+
+    document.getElementById("juego").style.display =
+        "none";
+
+    document.getElementById("resultado").style.display =
+        "block";
+
+    let mensaje = "";
+
+    if (puntos >= 40) {
+        mensaje = "🔥 ¡Excelente dominio del tema!";
+    }
+    else if (puntos >= 25) {
+        mensaje = "👏 ¡Muy buen trabajo!";
+    }
+    else {
+        mensaje = "📚 Sigue estudiando y vuelve a intentarlo.";
+    }
+
+    document.getElementById("textoResultado").innerHTML =
+
+        "Puntuación: <strong>" +
+        puntos +
+        "</strong><br><br>" +
+
+        "Vidas restantes: <strong>" +
+        vidas +
+        "</strong><br><br>" +
+
+        mensaje;
+
+}
+
+
+/* =====================================================
+   CREADOR
+===================================================== */
+
+function mostrarCreador() {
+
+    document.getElementById("menu").style.display =
+        "none";
+
+    document.getElementById("juego").style.display =
+        "none";
+
+    document.getElementById("resultado").style.display =
+        "none";
+
+    document.getElementById("creador").style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   VOLVER AL MENU
+===================================================== */
+
+function volverMenu() {
+
+    clearInterval(temporizador);
+
+    document.getElementById("menu").style.display =
+        "block";
+
+    document.getElementById("juego").style.display =
+        "none";
+
+    document.getElementById("creador").style.display =
+        "none";
+
+    document.getElementById("resultado").style.display =
+        "none";
+
+}
+
+</script>
+
+</body>
+</html>
